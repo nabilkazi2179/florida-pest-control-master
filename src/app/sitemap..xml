@@ -1,0 +1,45 @@
+import { ServicesData } from "@/constant";
+import type { MetadataRoute } from "next";
+
+const baseUrl = "https://www.flpc.ae";
+const now = new Date();
+
+export default function sitemap(): MetadataRoute.Sitemap {
+  // Static pages
+  const staticPages: MetadataRoute.Sitemap = [
+    {
+      url: `${baseUrl}`,
+      lastModified: now,
+      changeFrequency: "yearly",
+      priority: 1,
+    },
+    {
+      url: `${baseUrl}/about-us`,
+      lastModified: now,
+      changeFrequency: "yearly",
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/contact-us`,
+      lastModified: now,
+      changeFrequency: "yearly",
+      priority: 0.6,
+    },
+    {
+      url: `${baseUrl}/services`,
+      lastModified: now,
+      changeFrequency: "yearly",
+      priority: 0.6,
+    },
+  ];
+
+  // Dynamic health and safety pages
+  const servicesPages: MetadataRoute.Sitemap = ServicesData.map((item) => ({
+    url: `${baseUrl}${item.link}`,
+    lastModified: now,
+    changeFrequency: "yearly" as const,
+    priority: 0.7,
+  }));
+
+  return [...staticPages, ...servicesPages];
+}
